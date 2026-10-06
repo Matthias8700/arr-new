@@ -18,6 +18,17 @@ services:
 ###############################################
 # RADARR - Movies
 ###############################################
+#
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - TZ=Etc/UTC
+    ports:
+      - 8191:8191
+    restart: unless-stopped
+
   radarr:
     <<: *common-keys
     container_name: radarr
@@ -43,37 +54,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /docker/appdata/sonarr:/config
       - /data:/data
-
-###############################################
-# LIDARR - Music
-###############################################
-
-  lidarr:
-    <<: *common-keys
-    container_name: lidarr
-    image: ghcr.io/hotio/lidarr:latest
-    ports:
-      - 8686:8686
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /docker/appdata/lidarr:/config
-      - /data:/data
-
-###############################################
-# BAZARR - Subtitles
-###############################################
-
-  bazarr:
-    <<: *common-keys
-    container_name: bazarr
-    image: ghcr.io/hotio/bazarr:latest
-    ports:
-      - 6767:6767
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /docker/appdata/bazarr:/config
-      - /data/media:/data/media
-
 ###############################################
 # PROWLARR - Indexer Manager
 ###############################################
